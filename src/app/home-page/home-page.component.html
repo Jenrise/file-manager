@@ -1,0 +1,73 @@
+
+<div class="wrapper">
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+          
+          <ng-container matColumnDef="renameColumn">
+            <th mat-header-cell *matHeaderCellDef>  </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-raised-button (click)="openDialog(element.id)">Rename</button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fileTypeEnum">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element" id="fileType"> {{element.fileTypeEnum}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> <button mat-raised-button (click)="isFolder(element.fileTypeEnum, element.id)">{{element.name}}</button></td>
+          </ng-container>
+      
+          <ng-container matColumnDef="parentFolder">
+            <th mat-header-cell *matHeaderCellDef> parentFolderId </th>
+            <td mat-cell *matCellDef="let element"> {{element.parentFolderId}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actionsColumn">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element;  let j = index;"> 
+                <button mat-raised-button  color="warn" focusable="false" (click)="deleteTicket(element.id, element.parentFolderId)">
+                    <i class="fa fa-times mat-icon"></i> Remove
+                  </button>
+            </td>
+          </ng-container>
+      
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+      
+</div>
+
+<div class="uploads">
+  <form class="files" name="uploadFiles">
+    <input  type="file" hidden="true" name="multipartFile" (change)="onFileSelect($event)" id="file-input">
+        <label for="file-input">
+        <a mat-fab class="btn"><i class="material-icons">file_upload</i> 
+            
+        </a>
+        </label>
+  </form>
+  
+  <form class="folders" name="create">
+    <input  type="text" hidden="true" (click)="Dialog()" id="folder">
+        <label for="folder">
+        <a mat-fab class="btn"><i class="material-icons">folder</i> 
+            
+        </a>
+        </label>
+  </form>
+
+  <button class="back" mat-raised-button color="primary" (click)="Back()">На главную</button>
+</div>
+
